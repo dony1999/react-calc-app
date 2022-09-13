@@ -1,5 +1,5 @@
 import "./App.css";
-import "./Responsive.css"
+import "./Responsive.css";
 import { useState, useEffect } from "react";
 import { NumericFormat } from "react-number-format";
 
@@ -9,7 +9,7 @@ function App() {
   const [input, setInput] = useState("0");
   const [operator, setOperator] = useState(null);
   const [total, setTotal] = useState(false);
-  
+
   console.log("-----------render------------");
   console.log("preState: " + preState);
   console.log("curState: " + curState);
@@ -29,13 +29,13 @@ function App() {
     setTotal(false);
   };
 
-    useEffect(() => {
-      setInput(curState);
-    }, [curState]);
+  useEffect(() => {
+    setInput(curState);
+  }, [curState]);
 
-    useEffect(() => {
-      setInput("0");
-    },[]);
+  useEffect(() => {
+    setInput("0");
+  }, []);
 
   const operatorType = (e) => {
     setTotal(false);
@@ -44,8 +44,8 @@ function App() {
     if (preState !== "") {
       equals();
     } else {
-    setPreState(curState);
-    setCurState("");
+      setPreState(curState);
+      setCurState("");
     }
   };
 
@@ -57,25 +57,25 @@ function App() {
     var calculate;
     switch (operator) {
       case "+":
-        calculate = (parseFloat(preState) + parseFloat(curState));
+        calculate = parseFloat(preState) + parseFloat(curState);
         break;
       case "-":
-        calculate = (parseFloat(preState) - parseFloat(curState));
+        calculate = parseFloat(preState) - parseFloat(curState);
         break;
       case "X":
-        calculate = (parseFloat(preState) * parseFloat(curState));
+        calculate = parseFloat(preState) * parseFloat(curState);
         break;
       case "÷":
-        calculate = (parseFloat(preState) / parseFloat(curState));
+        calculate = parseFloat(preState) / parseFloat(curState);
         break;
       default:
         return;
     }
-      setInput("");
-      setPreState(calculate);
-      setCurState("");
-      setOperator("")
-};
+    setInput("");
+    setPreState(calculate);
+    setCurState("");
+    setOperator("");
+  };
 
   const minusPlus = () => {
     if (curState.charAt(0) === "-") {
@@ -87,14 +87,14 @@ function App() {
 
   const percent = () => {
     if (preState) {
-      setCurState((parseFloat(preState) / 100 * preState).toFixed(2));
-    } 
-    if (curState){
-      setCurState((parseFloat(curState) / 100 * preState).toFixed(2))
+      setCurState(((parseFloat(preState) / 100) * preState).toFixed(2));
+    }
+    if (curState) {
+      setCurState(((parseFloat(curState) / 100) * preState).toFixed(2));
     }
     if (preState === "") {
       setCurState(parseFloat(curState) / 100);
-    } 
+    }
   };
 
   const reset = () => {
@@ -182,7 +182,6 @@ function App() {
         </div>
       </div>
     </div>
-  
   );
 }
 
