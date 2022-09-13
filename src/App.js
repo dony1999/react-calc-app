@@ -86,11 +86,12 @@ function App() {
 
   const percent = () => {
     if (preState) {
-      setCurState(((parseFloat(curState) / 100) * preState).toFixed(2));
+      setCurState(((parseFloat(preState) / 100) * preState).toFixed(2));
     } else if(preState === "") {
       setCurState(parseFloat(curState) / 100);
-    } else {
-      setCurState((parseFloat(preState) / 100 * Math.pow(preState,2)).toFixed(2))
+    } 
+    else {
+      setCurState((parseFloat(curState) / 100 * preState).toFixed(2))
     }
   };  
 
