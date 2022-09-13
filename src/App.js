@@ -11,7 +11,7 @@ function App() {
   const [total, setTotal] = useState(false);
   
   console.log("-----------render------------");
-  console.log(preState + "preState:");
+  console.log("preState: " + preState);
   console.log("curState: " + curState);
   console.log("input: " + input);
   console.log("operator: " + operator);
@@ -43,8 +43,10 @@ function App() {
     if (curState === "") return;
     if (preState !== "") {
       equals();
-    } else setPreState(curState);
+    } else {
+    setPreState(curState);
     setCurState("");
+    }
   };
 
   const equals = (e) => {
@@ -55,24 +57,24 @@ function App() {
     var calculate;
     switch (operator) {
       case "+":
-        calculate = parseFloat(preState) + parseFloat(curState);
+        calculate = (parseFloat(preState) + parseFloat(curState));
         break;
       case "-":
-        calculate = parseFloat(preState) - parseFloat(curState);
+        calculate = (parseFloat(preState) - parseFloat(curState));
         break;
       case "X":
-        calculate = parseFloat(preState) * parseFloat(curState);
+        calculate = (parseFloat(preState) * parseFloat(curState));
         break;
       case "÷":
-        calculate = parseFloat(preState) / parseFloat(curState);
+        calculate = (parseFloat(preState) / parseFloat(curState));
         break;
       default:
-        break;
+        return;
     }
-    setInput('');
-    setPreState(calculate);
-    setCurState("");
-  };
+      setInput("");
+      setPreState(calculate);
+      setCurState("");
+};
 
   const minusPlus = () => {
     if (curState.charAt(0) === "-") {
@@ -84,11 +86,13 @@ function App() {
 
   const percent = () => {
     if (preState) {
-      setCurState((parseFloat(curState) / 100) * 100);
-    } else {
+      setCurState(((parseFloat(curState) / 100) * preState).toFixed(2));
+    } else if(preState === "") {
       setCurState(parseFloat(curState) / 100);
+    } else {
+      setCurState((parseFloat(preState) / 100 * Math.pow(preState,2)).toFixed(2))
     }
-  };
+  };  
 
   const reset = () => {
     setPreState("");
@@ -170,8 +174,7 @@ function App() {
             .
           </div>
           <div className="btn btn-operator" onClick={equals}>
-            {" "}
-            ={" "}
+            =
           </div>
         </div>
       </div>
