@@ -1,0 +1,48 @@
+@media (max-width: 739px ) {
+    
+    .screen {
+        width: 306px;
+        margin-left: 40px;
+    }
+
+    .btn-container {
+        grid-template-columns: repeat(4, 0fr);
+        margin-left: 40px;
+    }
+
+    .btn {
+        font-size: 16px;
+        width: 76.5px;
+        padding: 25px;
+    }
+
+    .zero {
+        width: 100% !important;
+    }
+}
+
+@media (min-width: 740px) and (max-width: 1023px) {
+    .container{
+        margin-top: 10px;
+        margin-left: 10px;
+        width: auto;
+    }
+
+    .wrapper {
+        width: auto;
+    }
+    
+    .screen {
+        max-width: 580px;
+        margin-left: 60px;
+    }
+
+    .btn-container {
+        width: 580px;
+        margin-left: 60px;
+    }
+}
+
+@media (min-width: 1024px) {
+    
+}

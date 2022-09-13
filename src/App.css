@@ -13,6 +13,8 @@
   }
 }
 
+
+
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -45,7 +47,7 @@ body {
 
 .container {
   height: auto;
-  width: 60vh;
+  width: auto;
   margin-top: 35px;
 }
 
@@ -53,7 +55,13 @@ body {
   display: grid;
   height: 100%;
   width: 100%;
-  grid-template-columns: repeat(4,2fr)
+}
+
+.btn-container {
+  grid-template-columns: repeat(4, 2fr);
+  display: grid;
+  height: 100%;
+  width: 100%;
 }
 
 .btn {
