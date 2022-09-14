@@ -72,9 +72,8 @@ function App() {
         return;
     }
     setInput("");
-    setPreState(calculate);
+    setPreState(calculate % 1 ? calculate.toFixed(1) : calculate);
     setCurState("");
-    // setOperator("")
   };
 
   const minusPlus = () => {
@@ -86,13 +85,13 @@ function App() {
   };
 
   const percent = () => {
-    if (operator === "X" || operator === "÷"){
+    if (operator === "X" || operator === "÷") {
       setCurState((parseFloat(preState) / 100));
     } else if (curState) {
       setCurState(((parseFloat(curState) / 100) * preState).toFixed(2));
     } else {
       setCurState(((parseFloat(preState) / 100) * preState).toFixed(2));
-    } 
+    }
   };
 
   const reset = () => {
