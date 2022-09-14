@@ -72,7 +72,7 @@ function App() {
         return;
     }
     setInput("");
-    setPreState(calculate % 1 ? calculate.toFixed(1) : calculate);
+    setPreState(Math.round(calculate * 100000) / 100000 );
     setCurState("");
   };
 
