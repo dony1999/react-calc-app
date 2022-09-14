@@ -34,7 +34,7 @@ function App() {
   }, [curState]);
 
   useEffect(() => {
-    setInput("0"); 
+    setInput("0");
   }, []);
 
   const operatorType = (e) => {
@@ -72,7 +72,7 @@ function App() {
         return;
     }
     setInput("");
-    setPreState(Math.round(calculate * 100000000) / 100000000 );
+    setPreState(Math.round(calculate * 1000000000) / 1000000000);
     setCurState("");
   };
 
@@ -86,11 +86,15 @@ function App() {
 
   const percent = () => {
     if (operator === "X" || operator === "÷") {
-      setCurState((parseFloat(preState) / 100));
+      setCurState(parseFloat(preState) / 100);
     } else if (curState) {
-      setCurState(((parseFloat(curState) / 100) * preState).toFixed(2));
+      setCurState(
+        Math.round((parseFloat(curState) / 100) * preState * 100) / 100
+      );
     } else {
-      setCurState(((parseFloat(preState) / 100) * preState).toFixed(2));
+      setCurState(
+        Math.round((parseFloat(preState) / 100) * preState * 100) / 100
+      );
     }
   };
 
