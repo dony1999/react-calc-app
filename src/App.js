@@ -34,7 +34,7 @@ function App() {
   }, [curState]);
 
   useEffect(() => {
-    setInput("0");
+    setInput("0"); 
   }, []);
 
   const operatorType = (e) => {
@@ -74,7 +74,7 @@ function App() {
     setInput("");
     setPreState(calculate);
     setCurState("");
-    setOperator("");
+    // setOperator("")
   };
 
   const minusPlus = () => {
@@ -86,15 +86,13 @@ function App() {
   };
 
   const percent = () => {
-    if (preState) {
-      setCurState(((parseFloat(preState) / 100) * preState).toFixed(2));
-    }
-    if (curState) {
+    if (operator === "X" || operator === "÷"){
+      setCurState((parseFloat(preState) / 100));
+    } else if (curState) {
       setCurState(((parseFloat(curState) / 100) * preState).toFixed(2));
-    }
-    if (preState === "") {
-      setCurState(parseFloat(curState) / 100);
-    }
+    } else {
+      setCurState(((parseFloat(preState) / 100) * preState).toFixed(2));
+    } 
   };
 
   const reset = () => {
