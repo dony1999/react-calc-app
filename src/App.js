@@ -104,23 +104,16 @@ function App() {
     curState
       ? setCurState(Math.pow(curState, 2))
       : setCurState(Math.pow(preState, 2));
-    
   };
 
   const onePerX = () => {
-    curState
-      ? setCurState(1 / curState)
-      : setCurState(1 / preState);
-    
+    curState ? setCurState(1 / curState) : setCurState(1 / preState);
   };
 
   const squareRoot = () => {
     curState
-    ?
-      setCurState(Math.sqrt(curState))
-    :
-      setCurState(Math.sqrt(preState));
-    
+      ? setCurState(Math.sqrt(curState))
+      : setCurState(Math.sqrt(preState));
   };
 
   const reset = () => {
@@ -136,11 +129,8 @@ function App() {
 
   const deleteLastCharacter = () => {
     curState
-    ?
-      setCurState(curState.slice(0, curState.length - 1))
-    :
-      setCurState(curState);
-    
+      ? setCurState(curState.slice(0, curState.length - 1))
+      : setCurState(curState);
   };
 
   return (
@@ -222,7 +212,7 @@ function App() {
           <div className="btn btn-operator" onClick={operatorType}>
             -
           </div>
-          <div className="btn btn-fnc" onClick={minusPlus}> 
+          <div className="btn btn-fnc" onClick={minusPlus}>
             +/-
           </div>
           <div className="btn number zero" onClick={inputNumber}>
