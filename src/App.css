@@ -13,8 +13,6 @@
   }
 }
 
-
-
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -53,8 +51,8 @@ body {
 
 .wrapper{
   display: grid;
-  height: 100%;
-  width: 100%;
+  height: auto;
+  width: auto;
 }
 
 .btn-container {
@@ -67,7 +65,7 @@ body {
 .btn {
   padding: 32px;
   background-color: #6a5882;
-  border: #73737D solid 2px;
+  border: #513a71 solid 1px;
   text-align: center;
 }
 
@@ -90,7 +88,7 @@ body {
   text-align: right;
   padding: 40px 30px 10px 30px;
   background: #492d6ed1;
-  border: 2px solid #73737D;
+  border: #513a71 solid 2px;
   font-size: 45px;
   height: 115px;
 }
