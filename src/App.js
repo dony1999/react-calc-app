@@ -63,7 +63,7 @@ function App() {
       case "-":
         calculate = parseFloat(preState) - parseFloat(curState);
         break;
-      case "X":
+      case "x":
         calculate = parseFloat(preState) * parseFloat(curState);
         break;
       case "÷":
@@ -87,8 +87,8 @@ function App() {
   };
 
   const percent = () => {
-    if (operator === "X" || operator === "÷") {
-      setCurState(parseFloat(preState) / 100);
+    if (operator === "x" || operator === "÷") {
+      setCurState(parseFloat(curState) / 100);
     } else if (curState) {
       setCurState(
         Math.round((parseFloat(curState) / 100) * preState * 100) / 100
@@ -101,27 +101,26 @@ function App() {
   };
 
   const square = () => {
-    if (curState) {
-      setCurState(Math.pow(curState, 2));
-    } else {
-      setCurState(Math.pow(preState, 2));
-    }
+    curState
+      ? setCurState(Math.pow(curState, 2))
+      : setCurState(Math.pow(preState, 2));
+    
   };
 
   const onePerX = () => {
-    if (curState) {
-      setCurState(1 / curState);
-    } else {
-      setCurState(1 / preState);
-    }
+    curState
+      ? setCurState(1 / curState)
+      : setCurState(1 / preState);
+    
   };
 
   const squareRoot = () => {
-    if (curState) {
-      setCurState(Math.sqrt(curState));
-    } else {
+    curState
+    ?
+      setCurState(Math.sqrt(curState))
+    :
       setCurState(Math.sqrt(preState));
-    }
+    
   };
 
   const reset = () => {
@@ -136,11 +135,12 @@ function App() {
   };
 
   const deleteLastCharacter = () => {
-    if (curState) {
-      setCurState(curState.slice(0, curState.length - 1));
-    } else {
+    curState
+    ?
+      setCurState(curState.slice(0, curState.length - 1))
+    :
       setCurState(curState);
-    }
+    
   };
 
   return (
@@ -208,7 +208,7 @@ function App() {
             6
           </div>
           <div className="btn btn-operator" onClick={operatorType}>
-            X
+            x
           </div>
           <div className="btn number" onClick={inputNumber}>
             1
@@ -222,7 +222,7 @@ function App() {
           <div className="btn btn-operator" onClick={operatorType}>
             -
           </div>
-          <div className="btn btn-fnc" onClick={minusPlus}>
+          <div className="btn btn-fnc" onClick={minusPlus}> 
             +/-
           </div>
           <div className="btn number zero" onClick={inputNumber}>
