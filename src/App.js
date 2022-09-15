@@ -89,6 +89,9 @@ function App() {
   const percent = () => {
     if (operator === "x" || operator === "÷") {
       setCurState(parseFloat(curState) / 100);
+    }
+    else if (preState || curState === "") {
+      setCurState(parseFloat(preState) / 100);
     } else if (curState) {
       setCurState(
         Math.round((parseFloat(curState) / 100) * preState * 100) / 100
@@ -123,12 +126,15 @@ function App() {
   };
 
   const resetCurrentState = () => {
-    if (curState) {
+    if (curState && input) {
+      reset();
+    } else if (curState) {
       setCurState("");
       setInput("0");
     } else {
-        reset();
+      reset();
     }
+
   };
 
   const deleteLastCharacter = () => {
