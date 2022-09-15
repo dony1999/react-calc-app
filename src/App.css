@@ -63,7 +63,7 @@ body {
 }
 
 .btn {
-  padding: 32px;
+  padding: 25px;
   background-color: #6a5882;
   border: #513a71 solid 1px;
   text-align: center;
@@ -100,10 +100,10 @@ body {
 .btn-operator {
   background-color: orange !important ;
 }
-
+/* 
 .zero {
   grid-column: 1/ span 2;
-}
+} */
 
 @keyframes App-logo-spin {
   from {

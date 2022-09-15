@@ -2,6 +2,7 @@ import "./App.css";
 import "./Responsive.css";
 import { useState, useEffect } from "react";
 import { NumericFormat } from "react-number-format";
+import { FiDelete } from "react-icons/fi";
 
 function App() {
   const [preState, setPreState] = useState("");
@@ -74,6 +75,7 @@ function App() {
     setInput("");
     setPreState(Math.round(calculate * 1000000000) / 1000000000);
     setCurState("");
+    setOperator("");
   };
 
   const minusPlus = () => {
@@ -98,10 +100,47 @@ function App() {
     }
   };
 
+  const square = () => {
+    if (curState) {
+      setCurState(Math.pow(curState, 2));
+    } else {
+      setCurState(Math.pow(preState, 2));
+    }
+  };
+
+  const onePerX = () => {
+    if (curState) {
+      setCurState(1 / curState);
+    } else {
+      setCurState(1 / preState);
+    }
+  };
+
+  const squareRoot = () => {
+    if (curState) {
+      setCurState(Math.sqrt(curState));
+    } else {
+      setCurState(Math.sqrt(preState));
+    }
+  };
+
   const reset = () => {
     setPreState("");
     setCurState("");
     setInput("0");
+  };
+
+  const resetCurrentState = () => {
+    setCurState("");
+    setInput("0");
+  };
+
+  const deleteLastCharacter = () => {
+    if (curState) {
+      setCurState(curState.slice(0, curState.length - 1));
+    } else {
+      setCurState(curState);
+    }
   };
 
   return (
@@ -123,14 +162,26 @@ function App() {
           )}
         </div>
         <div className="btn-container">
+          <div className="btn btn-fnc" onClick={percent}>
+            %
+          </div>
+          <div className="btn btn-fnc" onClick={resetCurrentState}>
+            CE
+          </div>
           <div className="btn btn-fnc" onClick={reset}>
             AC
           </div>
-          <div className="btn btn-fnc" onClick={minusPlus}>
-            +/-
+          <div className="btn btn-fnc" onClick={deleteLastCharacter}>
+            <FiDelete />
           </div>
-          <div className="btn btn-fnc" onClick={percent}>
-            %
+          <div className="btn btn-fnc" onClick={onePerX}>
+            1/x
+          </div>
+          <div className="btn btn-fnc" onClick={square}>
+            x^2
+          </div>
+          <div className="btn btn-fnc" onClick={squareRoot}>
+            √x
           </div>
           <div className="btn btn-operator" onClick={operatorType}>
             ÷
@@ -145,7 +196,7 @@ function App() {
             9
           </div>
           <div className="btn btn-operator" onClick={operatorType}>
-            X
+            +
           </div>
           <div className="btn number" onClick={inputNumber}>
             4
@@ -157,7 +208,7 @@ function App() {
             6
           </div>
           <div className="btn btn-operator" onClick={operatorType}>
-            -
+            X
           </div>
           <div className="btn number" onClick={inputNumber}>
             1
@@ -169,7 +220,10 @@ function App() {
             3
           </div>
           <div className="btn btn-operator" onClick={operatorType}>
-            +
+            -
+          </div>
+          <div className="btn btn-fnc" onClick={minusPlus}>
+            +/-
           </div>
           <div className="btn number zero" onClick={inputNumber}>
             0
