@@ -123,10 +123,12 @@ function App() {
   };
 
   const resetCurrentState = () => {
-    preState
-      ? reset()
-      : setCurState("");
-        setInput("0");
+    if (curState) {
+      setCurState("");
+      setInput("0");
+    } else {
+        reset();
+    }
   };
 
   const deleteLastCharacter = () => {
