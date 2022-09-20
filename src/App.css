@@ -82,6 +82,13 @@ body {
  color: orange;
 }
 
+.history {
+  width: 100%;
+  background-color: #492d6ed1;
+  border: #513a71 solid 2px;
+  text-align: right;
+}
+
 .screen {
   grid-column: 1/-1;
   color: white;

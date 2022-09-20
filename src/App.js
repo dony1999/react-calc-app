@@ -1,20 +1,22 @@
 import "./App.css";
 import "./Responsive.css";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { NumericFormat } from "react-number-format";
 import { FiDelete } from "react-icons/fi";
+import { FaSquareRootAlt,FaPercentage } from "react-icons/fa";
+// import { useEffect } from "react";
 
 function App() {
   const [preState, setPreState] = useState("");
   const [curState, setCurState] = useState("");
-  const [input, setInput] = useState("0");
+  // const [display, setDisplay] = useState("0");
   const [operator, setOperator] = useState(null);
   const [total, setTotal] = useState(false);
 
   console.log("-----------render------------");
   console.log("preState: " + preState);
   console.log("curState: " + curState);
-  console.log("input: " + input);
+  // console.log("display: " + display);
   console.log("operator: " + operator);
   console.log("total: " + total);
 
@@ -30,13 +32,13 @@ function App() {
     setTotal(false);
   };
 
-  useEffect(() => {
-    setInput(curState);
-  }, [curState]);
+  // useEffect(() => {
+  //   setDisplay(curState);
+  // }, [curState]);
 
-  useEffect(() => {
-    setInput("0");
-  }, []);
+  // useEffect(() => {
+  //   setDisplay("0")
+  // }, []);
 
   const operatorType = (e) => {
     setTotal(false);
@@ -72,10 +74,9 @@ function App() {
       default:
         return;
     }
-    setInput("");
+    // setDisplay("");
     setPreState(Math.round(calculate * 1000000000) / 1000000000);
     setCurState("");
-    setOperator("");
   };
 
   const minusPlus = () => {
@@ -87,17 +88,20 @@ function App() {
   };
 
   const percent = () => {
-    if (operator === "x" || operator === "÷") {
+    if (preState && curState && (operator === "x" || operator === "÷")) {
       setCurState(parseFloat(curState) / 100);
-    }
-    else if (preState || curState === "") {
-      setCurState(parseFloat(preState) / 100);
+    } else if (
+      preState &&
+      curState === "" &&
+      (operator === "x" || operator === "÷")
+    ) {
+      setPreState(parseFloat(preState) / 100);
     } else if (curState) {
       setCurState(
         Math.round((parseFloat(curState) / 100) * preState * 100) / 100
       );
     } else {
-      setCurState(
+      setPreState(
         Math.round((parseFloat(preState) / 100) * preState * 100) / 100
       );
     }
@@ -122,19 +126,17 @@ function App() {
   const reset = () => {
     setPreState("");
     setCurState("");
-    setInput("0");
+    // setDisplay("0");
+    setOperator(null);
   };
 
   const resetCurrentState = () => {
-    if (curState && input) {
-      reset();
-    } else if (curState) {
+    if (curState) {
       setCurState("");
-      setInput("0");
+      // setDisplay("0");
     } else {
       reset();
     }
-
   };
 
   const deleteLastCharacter = () => {
@@ -147,9 +149,9 @@ function App() {
     <div className="container">
       <div className="wrapper">
         <div className="screen">
-          {input !== "" || input === "0" ? (
+          {curState !== "" || curState === "0" ? (
             <NumericFormat
-              value={input}
+              value={curState}
               displayType={"text"}
               thousandSeparator={true}
             />
@@ -163,7 +165,7 @@ function App() {
         </div>
         <div className="btn-container">
           <div className="btn btn-fnc" onClick={percent}>
-            %
+            <FaPercentage/>
           </div>
           <div className="btn btn-fnc" onClick={resetCurrentState}>
             CE
@@ -181,7 +183,7 @@ function App() {
             x^2
           </div>
           <div className="btn btn-fnc" onClick={squareRoot}>
-            √x
+            <FaSquareRootAlt/>
           </div>
           <div className="btn btn-operator" onClick={operatorType}>
             ÷
