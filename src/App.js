@@ -3,7 +3,9 @@ import "./Responsive.css";
 import { useState } from "react";
 import { NumericFormat } from "react-number-format";
 import { FiDelete } from "react-icons/fi";
-import { FaSquareRootAlt,FaPercentage } from "react-icons/fa";
+import { MdOutlineSuperscript } from "react-icons/md";
+import { FaSquareRootAlt, FaPercentage } from "react-icons/fa";
+
 // import { useEffect } from "react";
 
 function App() {
@@ -180,7 +182,7 @@ function App() {
             1/x
           </div>
           <div className="btn btn-fnc" onClick={square}>
-            x^2
+            <MdOutlineSuperscript/>
           </div>
           <div className="btn btn-fnc" onClick={squareRoot}>
             <FaSquareRootAlt/>
