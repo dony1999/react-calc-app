@@ -6,45 +6,36 @@ import { FiDelete } from "react-icons/fi";
 import { MdOutlineSuperscript } from "react-icons/md";
 import { FaSquareRootAlt, FaPercentage } from "react-icons/fa";
 
-// import { useEffect } from "react";
+let operator = false;
 
 function App() {
   const [preState, setPreState] = useState("");
   const [curState, setCurState] = useState("");
-  // const [display, setDisplay] = useState("0");
-  const [operator, setOperator] = useState(null);
-  const [total, setTotal] = useState(false);
+  // const [operator, setOperator] = useState(null);
+  // const [total, setTotal] = useState(false);
 
   console.log("-----------render------------");
-  console.log("preState: " + preState);
+  console.log("prevNumber: " + typeof preState);
+  console.log("prevNumber: " + preState);
   console.log("curState: " + curState);
-  // console.log("display: " + display);
   console.log("operator: " + operator);
-  console.log("total: " + total);
+  // console.log("total: "    + total);
 
   const inputNumber = (e) => {
     if (curState.includes(".") && e.target.innerText === ".") return;
-    if (total) {
-      setPreState("");
-    }
+    // if (total) {
+    //   setPreState("");
+    // }
 
     curState
       ? setCurState((pre) => pre + e.target.innerText)
       : setCurState(e.target.innerText);
-    setTotal(false);
+    // setTotal(false);
   };
 
-  // useEffect(() => {
-  //   setDisplay(curState);
-  // }, [curState]);
-
-  // useEffect(() => {
-  //   setDisplay("0")
-  // }, []);
-
   const operatorType = (e) => {
-    setTotal(false);
-    setOperator(e.target.innerText);
+    // setTotal(false);
+    operator = e.target.innerText;
     if (curState === "") return;
     if (preState !== "") {
       equals();
@@ -54,29 +45,71 @@ function App() {
     }
   };
 
+  // useEffect(() => {
+  //   localStorage.setItem("operator", JSON.stringify(operator));
+  // }, [operator])
+
+  // useEffect(() => {
+  //   const operator = JSON.parse(localStorage.getItem("operator"));
+  //   if (operator) {
+  //     setOperator(operator);
+  //   }
+  // },[])
+
   const equals = (e) => {
     if (e?.target.innerText === "=") {
-      setTotal(true);
+      // setTotal(true);
     }
 
     var calculate;
     switch (operator) {
       case "+":
-        calculate = parseFloat(preState) + parseFloat(curState);
+        if (preState && curState === "") {
+          // TH không nhập số sau khi nhập toán tử
+          calculate = parseFloat(preState) + parseFloat(preState);
+        } else if (preState === "" && curState) {
+          // TH không nhập số trước khi nhập toán tử
+          calculate = 0 + parseFloat(curState);
+        } else {
+          calculate = parseFloat(preState) + parseFloat(curState);
+        }
         break;
       case "-":
-        calculate = parseFloat(preState) - parseFloat(curState);
+        if (preState && curState === "") {
+          // TH không nhập số sau khi nhập toán tử
+          calculate = parseFloat(preState) - parseFloat(preState);
+        } else if (preState === "" && curState) {
+          // TH không nhập số trước khi nhập toán tử
+          calculate = 0 - parseFloat(curState);
+        } else {
+          calculate = parseFloat(preState) - parseFloat(curState);
+        }
         break;
       case "x":
-        calculate = parseFloat(preState) * parseFloat(curState);
+        if (preState && curState === "") {
+          // TH không nhập số sau khi nhập toán tử
+          calculate = parseFloat(preState) * parseFloat(preState);
+        } else if (preState === "" && curState) {
+          // TH không nhập số trước khi nhập toán tử
+          calculate = 0 * parseFloat(curState);
+        } else {
+          calculate = parseFloat(preState) * parseFloat(curState);
+        }
         break;
       case "÷":
-        calculate = parseFloat(preState) / parseFloat(curState);
+        if (preState && curState === "") {
+          // TH không nhập số sau khi nhập toán tử
+          calculate = parseFloat(preState) / parseFloat(preState);
+        } else if (preState === "" && curState) {
+          // TH không nhập số trước khi nhập toán tử
+          calculate = 0 / parseFloat(curState);
+        } else {
+          calculate = parseFloat(preState) / parseFloat(curState);
+        }
         break;
       default:
         return;
     }
-    // setDisplay("");
     setPreState(Math.round(calculate * 1000000000) / 1000000000);
     setCurState("");
   };
@@ -128,14 +161,12 @@ function App() {
   const reset = () => {
     setPreState("");
     setCurState("");
-    // setDisplay("0");
-    setOperator(null);
+    operator = false;
   };
 
   const resetCurrentState = () => {
     if (curState) {
       setCurState("");
-      // setDisplay("0");
     } else {
       reset();
     }
@@ -167,7 +198,7 @@ function App() {
         </div>
         <div className="btn-container">
           <div className="btn btn-fnc" onClick={percent}>
-            <FaPercentage/>
+            <FaPercentage />
           </div>
           <div className="btn btn-fnc" onClick={resetCurrentState}>
             CE
@@ -182,10 +213,10 @@ function App() {
             1/x
           </div>
           <div className="btn btn-fnc" onClick={square}>
-            <MdOutlineSuperscript/>
+            <MdOutlineSuperscript />
           </div>
           <div className="btn btn-fnc" onClick={squareRoot}>
-            <FaSquareRootAlt/>
+            <FaSquareRootAlt />
           </div>
           <div className="btn btn-operator" onClick={operatorType}>
             ÷
