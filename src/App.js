@@ -7,190 +7,164 @@ import { MdOutlineSuperscript } from "react-icons/md";
 import { FaSquareRootAlt, FaPercentage } from "react-icons/fa";
 
 let operator = false;
+let prevNumber = false;
 
 function App() {
-  const [preState, setPreState] = useState("");
-  const [curState, setCurState] = useState("");
-  // const [operator, setOperator] = useState(null);
-  // const [total, setTotal] = useState(false);
+  let [rs, setRS] = useState("");
 
   console.log("-----------render------------");
-  console.log("prevNumber: " + typeof preState);
-  console.log("prevNumber: " + preState);
-  console.log("curState: " + curState);
+  console.log("typeof prevNumber: " + typeof prevNumber);
+  console.log("prevNumber: " + prevNumber);
+  console.log("typeof RS: " + typeof rs);
+  console.log("RS: " + rs);
   console.log("operator: " + operator);
-  // console.log("total: "    + total);
 
   const inputNumber = (e) => {
-    if (curState.includes(".") && e.target.innerText === ".") return;
-    // if (total) {
-    //   setPreState("");
-    // }
+    if (rs.includes(".") && e.target.innerText === ".") return;
 
-    curState
-      ? setCurState((pre) => pre + e.target.innerText)
-      : setCurState(e.target.innerText);
-    // setTotal(false);
+    rs ? setRS((pre) => pre + e.target.innerText) : setRS(e.target.innerText);
   };
 
   const operatorType = (e) => {
-    // setTotal(false);
     operator = e.target.innerText;
-    if (curState === "") return;
-    if (preState !== "") {
-      equals();
+    if (rs === "") return;
+    if (prevNumber === false) {
+      prevNumber = rs;
+      rs = "";
     } else {
-      setPreState(curState);
-      setCurState("");
+      equals();
     }
   };
 
-  // useEffect(() => {
-  //   localStorage.setItem("operator", JSON.stringify(operator));
-  // }, [operator])
-
-  // useEffect(() => {
-  //   const operator = JSON.parse(localStorage.getItem("operator"));
-  //   if (operator) {
-  //     setOperator(operator);
-  //   }
-  // },[])
-
   const equals = (e) => {
     if (e?.target.innerText === "=") {
-      // setTotal(true);
     }
-
     var calculate;
     switch (operator) {
       case "+":
-        if (preState && curState === "") {
+        if (prevNumber && rs === "") {
           // TH không nhập số sau khi nhập toán tử
-          calculate = parseFloat(preState) + parseFloat(preState);
-        } else if (preState === "" && curState) {
+          calculate = parseFloat(prevNumber) + parseFloat(prevNumber);
+        } else if (prevNumber === "" && rs) {
           // TH không nhập số trước khi nhập toán tử
-          calculate = 0 + parseFloat(curState);
+          calculate = 0 + parseFloat(rs);
         } else {
-          calculate = parseFloat(preState) + parseFloat(curState);
+          calculate = parseFloat(prevNumber) + parseFloat(rs);
         }
         break;
       case "-":
-        if (preState && curState === "") {
+        if (prevNumber && rs === "") {
           // TH không nhập số sau khi nhập toán tử
-          calculate = parseFloat(preState) - parseFloat(preState);
-        } else if (preState === "" && curState) {
+          calculate = parseFloat(prevNumber) - parseFloat(prevNumber);
+        } else if (prevNumber === "" && rs) {
           // TH không nhập số trước khi nhập toán tử
-          calculate = 0 - parseFloat(curState);
+          calculate = 0 - parseFloat(rs);
         } else {
-          calculate = parseFloat(preState) - parseFloat(curState);
+          calculate = parseFloat(prevNumber) - parseFloat(rs);
         }
         break;
       case "x":
-        if (preState && curState === "") {
+        if (prevNumber && rs === "") {
           // TH không nhập số sau khi nhập toán tử
-          calculate = parseFloat(preState) * parseFloat(preState);
-        } else if (preState === "" && curState) {
+          calculate = parseFloat(prevNumber) * parseFloat(prevNumber);
+        } else if (prevNumber === "" && rs) {
           // TH không nhập số trước khi nhập toán tử
-          calculate = 0 * parseFloat(curState);
+          calculate = 0 * parseFloat(rs);
         } else {
-          calculate = parseFloat(preState) * parseFloat(curState);
+          calculate = parseFloat(prevNumber) * parseFloat(rs);
         }
         break;
       case "÷":
-        if (preState && curState === "") {
+        if (prevNumber && rs === "") {
           // TH không nhập số sau khi nhập toán tử
-          calculate = parseFloat(preState) / parseFloat(preState);
-        } else if (preState === "" && curState) {
+          calculate = parseFloat(prevNumber) / parseFloat(prevNumber);
+        } else if (prevNumber === "" && rs) {
           // TH không nhập số trước khi nhập toán tử
-          calculate = 0 / parseFloat(curState);
+          calculate = 0 / parseFloat(rs);
         } else {
-          calculate = parseFloat(preState) / parseFloat(curState);
+          calculate = parseFloat(prevNumber) / parseFloat(rs);
         }
         break;
       default:
         return;
     }
-    setPreState(Math.round(calculate * 1000000000) / 1000000000);
-    setCurState("");
+    prevNumber = Math.round(calculate * 1000000000) / 1000000000;
+    setRS("");
   };
 
   const minusPlus = () => {
-    if (curState.charAt(0) === "-") {
-      setCurState(curState.substring(1));
+    if (rs.charAt(0) === "-") {
+      setRS(rs.substring(1));
     } else {
-      setCurState("-" + curState);
+      setRS("-" + rs);
     }
   };
 
   const percent = () => {
-    if (preState && curState && (operator === "x" || operator === "÷")) {
-      setCurState(parseFloat(curState) / 100);
+    if (prevNumber && rs && (operator === "x" || operator === "÷")) {
+      setRS(parseFloat(rs) / 100);
     } else if (
-      preState &&
-      curState === "" &&
+      prevNumber &&
+      rs === "" &&
       (operator === "x" || operator === "÷")
     ) {
-      setPreState(parseFloat(preState) / 100);
-    } else if (curState) {
-      setCurState(
-        Math.round((parseFloat(curState) / 100) * preState * 100) / 100
-      );
+      setRS(parseFloat(prevNumber) / 100);
+    } else if (rs) {
+      setRS(Math.round((parseFloat(rs) / 100) * prevNumber * 100) / 100);
     } else {
-      setPreState(
-        Math.round((parseFloat(preState) / 100) * preState * 100) / 100
+      setRS(
+        Math.round((parseFloat(prevNumber) / 100) * prevNumber * 100) / 100
       );
+    }
+
+    if (prevNumber && rs === "") {
+      prevNumber = "";
     }
   };
 
   const square = () => {
-    curState
-      ? setCurState(Math.pow(curState, 2))
-      : setCurState(Math.pow(preState, 2));
+    rs ? setRS(Math.pow(rs, 2)) : setRS(Math.pow(prevNumber, 2));
   };
 
   const onePerX = () => {
-    curState ? setCurState(1 / curState) : setCurState(1 / preState);
+    rs ? setRS(1 / rs) : setRS(1 / prevNumber);
   };
 
   const squareRoot = () => {
-    curState
-      ? setCurState(Math.sqrt(curState))
-      : setCurState(Math.sqrt(preState));
-  };
-
-  const reset = () => {
-    setPreState("");
-    setCurState("");
-    operator = false;
+    rs ? setRS(Math.sqrt(rs)) : setRS(Math.sqrt(prevNumber));
   };
 
   const resetCurrentState = () => {
-    if (curState) {
-      setCurState("");
+    if (rs) {
+      setRS("");
     } else {
       reset();
     }
   };
 
   const deleteLastCharacter = () => {
-    curState
-      ? setCurState(curState.slice(0, curState.length - 1))
-      : setCurState(curState);
+    rs ? setRS(rs.slice(0, rs.length - 1)) : setRS(rs);
+  };
+
+  const reset = () => {
+    setRS("");
+    prevNumber = "";
+    operator = false;
   };
 
   return (
     <div className="container">
       <div className="wrapper">
         <div className="screen">
-          {curState !== "" || curState === "0" ? (
+          {rs !== "" || rs === "0" ? (
             <NumericFormat
-              value={curState}
+              value={rs}
               displayType={"text"}
               thousandSeparator={true}
             />
           ) : (
             <NumericFormat
-              value={preState}
+              value={String(prevNumber)}
               displayType={"text"}
               thousandSeparator={true}
             />
