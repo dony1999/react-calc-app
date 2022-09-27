@@ -6,11 +6,12 @@ import { FiDelete } from "react-icons/fi";
 import { MdOutlineSuperscript } from "react-icons/md";
 import { FaSquareRootAlt, FaPercentage } from "react-icons/fa";
 
-let operator = false;
-let prevNumber = false;
+// let operator = false;
+let prevNumber = 0;
 
 function App() {
   let [rs, setRS] = useState("");
+  const [operator, setOperator] = useState(null);
 
   console.log("-----------render------------");
   console.log("typeof prevNumber: " + typeof prevNumber);
@@ -20,24 +21,30 @@ function App() {
   console.log("operator: " + operator);
 
   const inputNumber = (e) => {
-    // if (rs.includes(".") && e.target.innerText === ".") return;
+    if ((typeof rs === "number" && prevNumber === false) || prevNumber === 0) {
+      setRS(e.target.innerText);
+    } else if (rs) {
+      setRS((pre) => pre + e.target.innerText);
+    } else {
+      setRS(e.target.innerText);
+    }
 
-    rs ? setRS((pre) => pre + e.target.innerText) : setRS(e.target.innerText);
+    // rs ? setRS((pre) => pre + e.target.innerText) : setRS(e.target.innerText);
   };
 
   const operatorType = (e) => {
-    operator = e.target.innerText;
+    setOperator(e.target.innerText);
     if (rs === "") return;
-    if (prevNumber === false) {
-      prevNumber = rs;
-      rs = "";
-    } else {
+    if (prevNumber !== 0) {
       equals();
+    } else {
+      prevNumber = rs;
+      setRS("");
     }
   };
 
   const equals = (e) => {
-    var calculate;
+    let calculate;
     switch (operator) {
       case "+":
         if (prevNumber && rs === "") {
@@ -105,8 +112,8 @@ function App() {
     }
   };
 
-  const percent = () => {
-    if (rs && prevNumber === false) {
+  const percent = (e) => {
+    if ((rs && prevNumber === false) || (rs && prevNumber === 0)) {
       setRS(parseFloat(rs) / 100);
     } else if (prevNumber && rs && (operator === "x" || operator === "÷")) {
       setRS(parseFloat(rs) / 100);
@@ -122,10 +129,6 @@ function App() {
       setRS(
         Math.round((parseFloat(prevNumber) / 100) * prevNumber * 100) / 100
       );
-    }
-
-    if (prevNumber && rs === "") {
-      prevNumber = "";
     }
   };
 
@@ -155,8 +158,8 @@ function App() {
 
   const reset = () => {
     setRS("");
-    prevNumber = false;
-    operator = false;
+    prevNumber = 0;
+    setOperator(null);
   };
 
   return (
