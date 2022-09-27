@@ -20,7 +20,7 @@ function App() {
   console.log("operator: " + operator);
 
   const inputNumber = (e) => {
-    if (rs.includes(".") && e.target.innerText === ".") return;
+    // if (rs.includes(".") && e.target.innerText === ".") return;
 
     rs ? setRS((pre) => pre + e.target.innerText) : setRS(e.target.innerText);
   };
@@ -43,7 +43,7 @@ function App() {
         if (prevNumber && rs === "") {
           // TH không nhập số sau khi nhập toán tử
           calculate = parseFloat(prevNumber) + parseFloat(prevNumber);
-        } else if (prevNumber === "" && rs) {
+        } else if (prevNumber === false && rs) {
           // TH không nhập số trước khi nhập toán tử
           calculate = 0 + parseFloat(rs);
         } else {
@@ -54,9 +54,11 @@ function App() {
         if (prevNumber && rs === "") {
           // TH không nhập số sau khi nhập toán tử
           calculate = parseFloat(prevNumber) - parseFloat(prevNumber);
-        } else if (prevNumber === "" && rs) {
+        } else if (prevNumber === false && rs) {
           // TH không nhập số trước khi nhập toán tử
           calculate = 0 - parseFloat(rs);
+        } else if (prevNumber && rs === 0) {
+          calculate = parseFloat(rs) - 0;
         } else {
           calculate = parseFloat(prevNumber) - parseFloat(rs);
         }
@@ -65,7 +67,7 @@ function App() {
         if (prevNumber && rs === "") {
           // TH không nhập số sau khi nhập toán tử
           calculate = parseFloat(prevNumber) * parseFloat(prevNumber);
-        } else if (prevNumber === "" && rs) {
+        } else if (prevNumber === 0 && rs) {
           // TH không nhập số trước khi nhập toán tử
           calculate = 0 * parseFloat(rs);
         } else {
@@ -76,7 +78,7 @@ function App() {
         if (prevNumber && rs === "") {
           // TH không nhập số sau khi nhập toán tử
           calculate = parseFloat(prevNumber) / parseFloat(prevNumber);
-        } else if (prevNumber === "" && rs) {
+        } else if (prevNumber === false && rs) {
           // TH không nhập số trước khi nhập toán tử
           calculate = 0 / parseFloat(rs);
         } else {
@@ -91,7 +93,7 @@ function App() {
 
     if (e?.target.innerText === "=") {
       setRS(prevNumber);
-      prevNumber = "";
+      prevNumber = false;
     }
   };
 
@@ -104,14 +106,16 @@ function App() {
   };
 
   const percent = () => {
-    if (prevNumber && rs && (operator === "x" || operator === "÷")) {
+    if (rs && prevNumber === false) {
+      setRS(parseFloat(rs) / 100);
+    } else if (prevNumber && rs && (operator === "x" || operator === "÷")) {
       setRS(parseFloat(rs) / 100);
     } else if (
-      prevNumber &&
-      rs === "" &&
+      prevNumber === false &&
+      rs &&
       (operator === "x" || operator === "÷")
     ) {
-      setRS(parseFloat(prevNumber) / 100);
+      setRS(parseFloat(rs) / 100);
     } else if (rs) {
       setRS(Math.round((parseFloat(rs) / 100) * prevNumber * 100) / 100);
     } else {
@@ -151,7 +155,7 @@ function App() {
 
   const reset = () => {
     setRS("");
-    prevNumber = "";
+    prevNumber = false;
     operator = false;
   };
 
