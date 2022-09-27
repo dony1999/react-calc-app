@@ -37,8 +37,6 @@ function App() {
   };
 
   const equals = (e) => {
-    if (e?.target.innerText === "=") {
-    }
     var calculate;
     switch (operator) {
       case "+":
@@ -90,6 +88,11 @@ function App() {
     }
     prevNumber = Math.round(calculate * 1000000000) / 1000000000;
     setRS("");
+
+    if (e?.target.innerText === "=") {
+      setRS(prevNumber);
+      prevNumber = "";
+    }
   };
 
   const minusPlus = () => {
@@ -164,7 +167,7 @@ function App() {
             />
           ) : (
             <NumericFormat
-              value={String(prevNumber)}
+              value={prevNumber.toString()}
               displayType={"text"}
               thousandSeparator={true}
             />
