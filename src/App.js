@@ -21,7 +21,10 @@ function App() {
   console.log("operator: " + operator);
 
   const inputNumber = (e) => {
-    if ((typeof rs === "number" && prevNumber === false) || prevNumber === 0) {
+    if (
+      (typeof rs === "number" && prevNumber === 0) ||
+      (rs && prevNumber === false)
+    ) {
       setRS(e.target.innerText);
     } else if (rs) {
       setRS((pre) => pre + e.target.innerText);
@@ -97,10 +100,12 @@ function App() {
     }
     prevNumber = Math.round(calculate * 1000000000) / 1000000000;
     setRS("");
+    console.log(operator);
 
     if (e?.target.innerText === "=") {
       setRS(prevNumber);
       prevNumber = false;
+      setOperator(null);
     }
   };
 
