@@ -34,9 +34,6 @@ function App() {
   };
 
   const operatorType = (e) => {
-    if (prevNumber === 0) {
-      operator = false;
-    }
     if (operator === false || prevNumber === 0) {
       operator = e.target.innerText;
     }
