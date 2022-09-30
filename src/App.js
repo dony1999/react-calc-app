@@ -6,12 +6,12 @@ import { FiDelete } from "react-icons/fi";
 import { MdOutlineSuperscript } from "react-icons/md";
 import { FaSquareRootAlt, FaPercentage } from "react-icons/fa";
 
-// let operator = false;
+let operator = false;
 let prevNumber = 0;
 
 function App() {
   let [rs, setRS] = useState("");
-  const [operator, setOperator] = useState(null);
+  // const [operator, setOperator] = useState(null);
 
   console.log("-----------render------------");
   console.log("typeof prevNumber: " + typeof prevNumber);
@@ -31,23 +31,27 @@ function App() {
     } else {
       setRS(e.target.innerText);
     }
-
-    // rs ? setRS((pre) => pre + e.target.innerText) : setRS(e.target.innerText);
   };
 
   const operatorType = (e) => {
-    setOperator(e.target.innerText);
+    if (prevNumber === 0) {
+      operator = false;
+    }
+    if (operator === false || prevNumber === 0) {
+      operator = e.target.innerText;
+    }
     if (rs === "") return;
     if (prevNumber !== 0) {
       equals();
     } else {
       prevNumber = rs;
-      setRS("");
+      rs = "";
     }
   };
 
   const equals = (e) => {
     let calculate;
+
     switch (operator) {
       case "+":
         if (prevNumber && rs === "") {
@@ -98,14 +102,15 @@ function App() {
       default:
         return;
     }
+
     prevNumber = Math.round(calculate * 1000000000) / 1000000000;
     setRS("");
-    console.log(operator);
+    operator = window.event.target.getAttribute("value");
 
     if (e?.target.innerText === "=") {
       setRS(prevNumber);
-      prevNumber = false;
-      setOperator(null);
+      prevNumber = 0;
+      operator = false;
     }
   };
 
@@ -164,7 +169,7 @@ function App() {
   const reset = () => {
     setRS("");
     prevNumber = 0;
-    setOperator(null);
+    operator = false;
   };
 
   return (
@@ -207,9 +212,9 @@ function App() {
           <div className="btn btn-fnc" onClick={squareRoot}>
             <FaSquareRootAlt />
           </div>
-          <div className="btn btn-operator" onClick={operatorType}>
+          <form className="btn btn-operator" value="÷" onClick={operatorType}>
             ÷
-          </div>
+          </form>
           <div className="btn number" onClick={inputNumber}>
             7
           </div>
@@ -219,9 +224,9 @@ function App() {
           <div className="btn number" onClick={inputNumber}>
             9
           </div>
-          <div className="btn btn-operator" onClick={operatorType}>
+          <form className="btn btn-operator" value="+" onClick={operatorType}>
             +
-          </div>
+          </form>
           <div className="btn number" onClick={inputNumber}>
             4
           </div>
@@ -231,9 +236,9 @@ function App() {
           <div className="btn number" onClick={inputNumber}>
             6
           </div>
-          <div className="btn btn-operator" onClick={operatorType}>
+          <form className="btn btn-operator" value="x" onClick={operatorType}>
             x
-          </div>
+          </form>
           <div className="btn number" onClick={inputNumber}>
             1
           </div>
@@ -243,9 +248,9 @@ function App() {
           <div className="btn number" onClick={inputNumber}>
             3
           </div>
-          <div className="btn btn-operator" onClick={operatorType}>
+          <form className="btn btn-operator" value="-" onClick={operatorType}>
             -
-          </div>
+          </form>
           <div className="btn btn-fnc" onClick={minusPlus}>
             +/-
           </div>
@@ -255,9 +260,9 @@ function App() {
           <div className="btn number" onClick={inputNumber}>
             .
           </div>
-          <div className="btn btn-operator" onClick={equals}>
+          <form className="btn btn-operator" onClick={equals}>
             =
-          </div>
+          </form>
         </div>
       </div>
     </div>
