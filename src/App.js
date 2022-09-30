@@ -167,9 +167,15 @@ function App() {
   };
 
   const reset = () => {
-    setRS("");
-    prevNumber = 0;
-    operator = false;
+    if (operator !== false) {
+      setRS(0);
+      prevNumber = 0;
+      operator = false;
+    } else {
+      setRS("");
+      prevNumber = 0;
+      operator = false;
+    }
   };
 
   return (
