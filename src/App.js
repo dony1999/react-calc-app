@@ -68,8 +68,6 @@ function App() {
         } else if (prevNumber === 0 && rs) {
           // TH không nhập số trước khi nhập toán tử
           calculate = 0 - parseFloat(rs);
-        } else if (prevNumber && rs === 0) {
-          calculate = parseFloat(rs) - 0;
         } else {
           calculate = parseFloat(prevNumber) - parseFloat(rs);
         }
@@ -164,15 +162,9 @@ function App() {
   };
 
   const reset = () => {
-    if (operator !== false) {
-      setRS(0);
-      prevNumber = 0;
-      operator = false;
-    } else {
-      setRS("");
-      prevNumber = 0;
-      operator = false;
-    }
+    setRS(0);
+    prevNumber = 0;
+    operator = false;
   };
 
   return (
