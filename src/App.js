@@ -57,7 +57,7 @@ function App() {
         if (prevNumber && rs === "") {
           // TH không nhập số sau khi nhập toán tử
           calculate = parseFloat(prevNumber) + parseFloat(prevNumber);
-        } else if (prevNumber === false && rs) {
+        } else if (prevNumber === 0 && rs) {
           // TH không nhập số trước khi nhập toán tử
           calculate = 0 + parseFloat(rs);
         } else {
@@ -68,7 +68,7 @@ function App() {
         if (prevNumber && rs === "") {
           // TH không nhập số sau khi nhập toán tử
           calculate = parseFloat(prevNumber) - parseFloat(prevNumber);
-        } else if (prevNumber === false && rs) {
+        } else if (prevNumber === 0 && rs) {
           // TH không nhập số trước khi nhập toán tử
           calculate = 0 - parseFloat(rs);
         } else if (prevNumber && rs === 0) {
@@ -92,7 +92,7 @@ function App() {
         if (prevNumber && rs === "") {
           // TH không nhập số sau khi nhập toán tử
           calculate = parseFloat(prevNumber) / parseFloat(prevNumber);
-        } else if (prevNumber === false && rs) {
+        } else if (prevNumber === 0 && rs) {
           // TH không nhập số trước khi nhập toán tử
           calculate = 0 / parseFloat(rs);
         } else {
